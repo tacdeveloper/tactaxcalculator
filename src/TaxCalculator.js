@@ -4,25 +4,24 @@ export default function TaxCalculator() {
   const [monthlySalary, setMonthlySalary] = useState(0);
   const annualSalary = monthlySalary * 12;
 
-  const calculateTax = (income) => {
-    const slabs = [
-      { from: 0, to: 600000, rate: 0, fixed: 0 },
-      { from: 600001, to: 1200000, rate: 0.01, fixed: 0 },
-      { from: 1200001, to: 2200000, rate: 0.11, fixed: 0 },
-      { from: 2200001, to: 3200000, rate: 0.23, fixed: 0 },
-      { from: 3200001, to: 4100000, rate: 0.3, fixed: 0 },
-      { from: 4100001, to: Infinity, rate: 0.35, fixed: 0 }
-    ];
+const calculateTax = (income) => {
+  const slabs = [
+    { from: 0, to: 600000, rate: 0, fixed: 0 },
+    { from: 600001, to: 1200000, rate: 0.01, fixed: 0 },
+    { from: 1200001, to: 2200000, rate: 0.11, fixed: 6000 },
+    { from: 2200001, to: 3200000, rate: 0.23, fixed: 116000 },
+    { from: 3200001, to: 4100000, rate: 0.3, fixed: 346000 },
+    { from: 4100001, to: Infinity, rate: 0.35, fixed: 616000 }
+  ];
 
-    let tax = 0;
-    for (let slab of slabs) {
-      if (income >= slab.from && income <= slab.to) {
-        tax = (income - slab.from) * slab.rate + slab.fixed;
-        break;
-      }
+  for (let slab of slabs) {
+    if (income >= slab.from && income <= slab.to) {
+      return slab.fixed + (income - slab.from) * slab.rate;
     }
-    return tax;
-  };
+  }
+  return 0;
+};
+
 
   const annualTax = calculateTax(annualSalary);
   const monthlyTax = annualTax / 12;
